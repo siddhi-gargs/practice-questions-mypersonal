@@ -1,69 +1,150 @@
 // squares of [1, 2, 3] => [1, 4, 9]
-const squaresOf = function (numbers) { };
+const squaresOf = function (numbers) { return numbers * numbers};
+[1, 2, 3].map(squaresOf);
+[1, 4, 9].map(squaresOf);
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
-const lengthsOf = function (strings) { };
+const lengthsOf = function (strings) { return strings.length};
+["apple", "banana", "kiwi"].map(lengthsOf);
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
-const uppercaseOf = function (strings) { };
+const uppercaseOf = function (strings) { return strings.toUpperCase()};
+["hello", "world"].map(uppercaseOf);
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
-const firstCharactersOf = function (strings) { };
+const firstCharactersOf = function (strings) { return strings.at(0);};
+["apple", "banana", "kiwi"].map(firstCharactersOf);
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
-const truthValuesOf = function (numbers) { };
+const truthValuesOf = function (numbers) { return numbers !== 0};
+[0, 1, 2, 3].map(truthValuesOf);
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-const reversedStringsOf = function (strings) { };
+const rever = function (string, init) {
+  return init + string; 
+}
+
+const reversedStringsOf = function (strings) { 
+  return strings.split("").reduce(rever, "");
+};
+
+["hello", "world"].map(reversedStringsOf);
+
+const doubleEachChar = function(char) {
+  return char + char;
+}
 
 // double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
-const doubleLettersOf = function (strings) { };
+const doubleLettersOf = function (strings) { 
+  return strings.split("").map(doubleEachChar).join("");
+};
+
+["cat", "dog", "bat"].map(doubleLettersOf);
 
 // boolean negation of [true, false, true] => [false, true, false]
-const negatedBooleansOf = function (booleans) { };
+const negatedBooleansOf = function (booleans) { return !booleans};
+[true, false, true].map(negatedBooleansOf);
 
 // character codes of ["a", "b", "c"] => [97, 98, 99]
 // Use the `charCodeAt` method on each string
-const charCodesOf = function (strings) { };
+const charCodesOf = function (char) { return char.charCodeAt() };
+["b", "k", "m", "e"].map(charCodesOf);
 
 // extract domain names from ["user1@gmail.com", "admin@yahoo.com"] => ["gmail.com", "yahoo.com"]
-const domainNamesOf = function (emails) { };
+const domainNamesOf = function (emails) { return emails.split("@").at(-1)};
+["user1@gmail.com", "admin@yahoo.com", "saloni@gmail", "www@world.com"].map(domainNamesOf);
 
 // split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
-const splitWordsOf = function (strings) { };
+const splitWordsOf = function (strings) { return strings.split(" ")};
+["hello world", "goodbye moon"].map(splitWordsOf);
 
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
-const joinedArraysOf = function (arrayOfArrays) { };
+  const joinedArraysOf = function (arrayOfArrays) { return arrayOfArrays.join("")};
+  [["a", "b"], ["c", "d"]].map(joinedArraysOf);
 
 // repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
-const repeatedStringsOf = function (strings) { };
+const repeatedStringsOf = function (strings) { return strings + strings};
+["hi", "bye"].map(repeatedStringsOf);
 
 // count vowels in ["apple", "banana", "grape"] => [2, 3, 2]
-const countVowelsOf = function (strings) { };
+const vowels = function(charIsvowel) { 
+  return "aeiouAEIOU".includes(charIsvowel);
+}
+
+const countVowelsOf = function (strings) { 
+  return strings.split("").filter(vowels).length};
+["apple", "banana", "grape"].map(countVowelsOf);
 
 // reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
-const reversedArraysOf = function (arrays) { };
+const reversedArraysOf = function (arrays) { return arrays.reverse()};
+[[1, 2, 3], [4, 5, 6]].map(reversedArraysOf);
 
 // remove vowels from ["apple", "banana", "grape"] => ["ppl", "bnn", "grp"]
-const withoutVowelsOf = function (strings) { };
+const isNotVowel = function(char) {
+  return !"aeiouAEIOU".includes(char);
+}
+
+const withoutVowelsOf = function (strings) { 
+  return strings.split("").filter(isNotVowel).join("");
+};
+["apple", "banana", "grape"].map(withoutVowelsOf);
 
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]
-const cumulativeSumsOf = function (arrays) { };
+
+const addAdj = function(init, num) {
+  init.push(init.at(-1) + num);
+  return init;
+}
+
+const cumulativeSumsOf = function (arrays) { 
+  arrays.reduce(addAdj, [0]);
+  return arrays;
+};
+
+[[1, 2, 3], [4, 5, 6]].map(cumulativeSumsOf);
 
 // reverse words in ["hello world", "goodbye moon"] => ["olleh dlrow", "eybdoog noom"]
-const reversedWordsOf = function (strings) { };
+const reversedWordsOf = function (strings) { 
+  return strings.split(" ").map(reversedStringsOf).join(" ");
+};
+
+["hello world", "goodbye moon"].map(reversedWordsOf);
 
 // extract unique characters from ["apple", "banana", "grape"] => ["apl", "ban", "gra"]
 // Maintain the order of their first appearance in each string
 const uniqueCharactersOf = function (strings) { };
 
+const series = function(from, to, step) {
+  const range = [];
+  for (let iterator = from; iterator !== to; iterator = iterator + step) {
+    range.push(iterator);
+  }
+
+  return range;
+}
+
 // generate ranges from [3, 5, 2] => [[0, 1, 2], [0, 1, 2, 3, 4], [0, 1]]
-const rangesOf = function (numbers) { };
+const rangesOf = function (numbers) { 
+  return series(0, numbers, 1);
+};
+
+[3, 5, 2].map(rangesOf)
 
 // capitalize first letters of ["hello world", "goodbye moon"] => ["Hello World", "Goodbye Moon"]
-const capitalizedFirstLettersOf = function (strings) { };
+
+const firstLetterCap = function (string) {
+  const caps = string[0].toUpperCase();
+  return string.replace(string[0], caps);
+}
+
+const capitalizedFirstLettersOf = function (strings) { 
+  return strings.split(" ").map(firstLetterCap).join(" ");
+};
+
+["hello world", "goodbye moon"].map(capitalizedFirstLettersOf)
+
 
 // find word lengths in ["apple pie", "banana split"] => [[5, 3], [6, 5]]
 const wordLengthsOf = function (strings) { };
@@ -357,19 +438,78 @@ const getCategoryItems = function (categories) { };
 // given an array of order objects with `orderId` and `products`, where each product has a `name` and `quantity`, return an array of orders, where each order contains its `orderId` and an array of product names, each with the quantity
 // [{orderId: 1, products: [{name: "Laptop", quantity: 1}, {name: "Mouse", quantity: 2}]}, {orderId: 2, products: [{name: "Keyboard", quantity: 1}]}]
 // => [{orderId: 1, products: ["Laptop x1", "Mouse x2"]}, {orderId: 2, products: ["Keyboard x1"]}]
-const summarizeOrderProducts = function (orders) { };
+
+const orderDetails = [{orderId: 1, products: [{name: "Laptop", quantity: 1}, {name: "Mouse", quantity: 2}]}, {orderId: 2, products: [{name: "Keyboard", quantity: 1}]}];
+
+const product = function(product) {
+  return [product.name, "x" + product.quantity].join(" ");
+}
+
+const summarizeOrderProducts = function (orders) {
+  const orderObj = {};
+  orderObj.orderId = orders.orderId;
+  const productDetail = orders.products.map(product);
+  orderObj.products = productDetail;
+  return orderObj;
+};
+
+orderDetails.map(summarizeOrderProducts)
 
 // given an array of students, each with a `name` and a `courses` array, return a new array of objects, where each object contains the student's name and an array of their course names in uppercase
 // [{name: "Alice", courses: [{courseName: "Math"}, {courseName: "Science"}]}, {name: "Bob", courses: [{courseName: "English"}]}]
 // => [{name: "Alice", courses: ["MATH", "SCIENCE"]}, {name: "Bob", courses: ["ENGLISH"]}]
-const getStudentCourses = function (students) { };
+
+const courseDetail =  [{name: "Alice", courses: [{courseName: "Math"}, {courseName: "Science"}]}, {name: "Bob", courses: [{courseName: "English"}]}];
+
+const subjects = function(subName) {
+  return uppercaseOf(subName.courseName);
+}
+
+const getStudentCourses = function (students) { 
+  const object = {};
+  object.name = students.name;
+  const eachIndexSubject = students.courses.map(subjects);
+  object.courses = eachIndexSubject;
+  return object;
+};
+
+courseDetail.map(getStudentCourses);
 
 // given an array of books, each with a `title` and `chapters`, where each chapter has a `title` and a `pageCount`, return an array of books, each containing the book's title and an array of chapter titles along with their page counts
 // [{title: "Book 1", chapters: [{title: "Chapter 1", pageCount: 10}, {title: "Chapter 2", pageCount: 20}]}, {title: "Book 2", chapters: [{title: "Chapter 1", pageCount: 15}]}]
 // => [{title: "Book 1", chapters: ["Chapter 1: 10 pages", "Chapter 2: 20 pages"]}, {title: "Book 2", chapters: ["Chapter 1: 15 pages"]}]
-const summarizeBookChapters = function (books) { };
+
+const bookDetail = [{title: "Book 1", chapters: [{title: "Chapter 1", pageCount: 10}, {title: "Chapter 2", pageCount: 20}]}, {title: "Book 2", chapters: [{title: "Chapter 1", pageCount: 15}]}];
+
+const titleWithPageCount = function(chapters) {
+  return chapters.title + ": " + chapters.pageCount + " pages";
+}
+
+const summarizeBookChapters = function (books) { 
+  const eachTitle = {};
+  eachTitle["title"] = books.title;
+  const chap = books.chapters;
+  const chapterSummary = chap.map(titleWithPageCount);
+  eachTitle.chapters = chapterSummary;
+  return eachTitle;
+};
+
+bookDetail.map(summarizeBookChapters);
 
 // given an array of events, where each event has a `name` and an array of `attendees`, where each attendee has a `firstName` and `lastName`, return an array of events where each event contains the event name and an array of full names of attendees
 // [{name: "Concert", attendees: [{firstName: "John", lastName: "Doe"}, {firstName: "Jane", lastName: "Smith"}]}, {name: "Conference", attendees: [{firstName: "Bob", lastName: "Brown"}]}]
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
-const getEventAttendees = function (events) { };
+
+const values = function(keyvalues) {
+  return [keyvalues.firstName, keyvalues.lastName].join(" ");
+}
+
+const getEventAttendes = function(event) {
+  const necessayInfo = {};
+  necessayInfo["name"] = event.name;
+  const c = event.attendees;
+  necessayInfo["attendees"] = c.map(values);
+  return necessayInfo;
+}
+
+const filteredObject = events.map(getEventAttendes);
