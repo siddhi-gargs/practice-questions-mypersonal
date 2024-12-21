@@ -147,34 +147,70 @@ const capitalizedFirstLettersOf = function (strings) {
 
 
 // find word lengths in ["apple pie", "banana split"] => [[5, 3], [6, 5]]
-const wordLengthsOf = function (strings) { };
+const wordLengthsOf = function (strings) { 
+  return strings.split(" ").map((chars) => {return chars.length} );
+};
+
+["apple pie", "banana split"].map(wordLengthsOf);
 
 // flatten nested arrays of [[1, [2, 3]], [4, [5, 6]]] => [[1, 2, 3], [4, 5, 6]]
-const flattenedArraysOf = function (arrays) { };
+const flattenedArraysOf = function (arrays) { 
+  return arrays.flat();
+};
+
+[[1, [2, 3]], [4, [5, 6]]].map(flattenedArraysOf);
 
 // sort letters in ["cat", "bat", "rat"] alphabetically => ["act", "abt", "art"]
-const sortedLettersOf = function (strings) { };
+const sortedLettersOf = function (strings) { 
+  return strings.split('').sort().join("");
+};
+
+["cat", "bat", "rat"].map(sortedLettersOf);
 
 // wrap strings in brackets ["apple", "banana"] => ["[apple]", "[banana]"]
-const wrappedStringsOf = function (strings) { };
+const wrappedStringsOf = function (strings) { 
+  return "[" + strings + "]";
+};
+["apple", "banana"].map(wrappedStringsOf);
 
 // extract names from [{ name: "Alice" }, { name: "Bob" }] => ["Alice", "Bob"]
-const extractNames = function (objects) { };
+const extractNames = function (objects) {
+  return objects.name;
+};
+
+[{ name: "Alice" }, { name: "Bob" }].map(extractNames);
 
 // extract ages from [{ age: 25 }, { age: 30 }] => [25, 30]
-const extractAges = function (objects) { };
+const extractAges = function (objects) {  return objects.age; };
+[{ age: 25 }, { age: 30 }].map(extractAges);
 
 // extract the first letters of names from [{ name: "Alice" }, { name: "Bob" }] => ["A", "B"]
-const firstLettersOfNames = function (objects) { };
+
+const firstLettersOfNames = function (objects) { return objects.name[0]};
+[{ name: "Alice" }, { name: "Bob" }].map(firstLettersOfNames);
 
 // calculate areas from [{ width: 2, height: 3 }, { width: 4, height: 5 }] => [6, 20]
-const calculateAreas = function (rectangles) { };
+const calculateAreas = function (rectangles) {
+  return rectangles.height * rectangles.width;
+};
+[{ width: 2, height: 3 }, { width: 4, height: 5 }].map(calculateAreas);
 
 // extract boolean flags from [{ active: true }, { active: false }] => [true, false]
-const extractFlags = function (objects) { };
+const extractFlags = function (objects) {
+  return objects.active;
+};
+
+[{ active: true }, { active: false }].map(extractFlags);
 
 // concatenate first and last names from [{ firstName: "Alice", lastName: "Smith" }, { firstName: "Bob", lastName: "Brown" }] => ["Alice Smith", "Bob Brown"]
-const fullNames = function (objects) { };
+
+const completeName = [{ firstName: "Alice", lastName: "Smith" }, { firstName: "Bob", lastName: "Brown" }];
+
+const fullNames = function (objects) { 
+  return [objects.firstName, objects.lastName].join(" ");
+};
+
+completeName.map(fullNames);
 
 // calculate total prices from [{ price: 10, quantity: 2 }, { price: 5, quantity: 4 }] => [20, 20]
 // (price * quantity)
@@ -433,7 +469,23 @@ const formatProductTags = function (products) { };
 // given an array of categories where each category has a `categoryName` and `items` array, return a new array where each item is an object with the category name and an array of item names
 // [{categoryName: "Fruits", items: [{name: "Apple"}, {name: "Banana"}]}, {categoryName: "Vegetables", items: [{name: "Carrot"}]}] 
 // => [{categoryName: "Fruits", items: ["Apple", "Banana"]}, {categoryName: "Vegetables", items: ["Carrot"]}]
-const getCategoryItems = function (categories) { };
+
+const grocery = [{categoryName: "Fruits", items: [{name: "Apple"}, {name: "Banana"}]}, {categoryName: "Vegetables", items: [{name: "Carrot"}]}];
+
+const products = function(product) {
+  return product.name;
+}
+
+const getCategoryItems = function (categories) {
+  const orderObj = {};
+  orderObj.categoryName = categories.categoryName;
+  const productDetail = categories.items.map(products);
+  orderObj.items = productDetail;
+  return orderObj; 
+};
+
+grocery.map(getCategoryItems);
+
 
 // given an array of order objects with `orderId` and `products`, where each product has a `name` and `quantity`, return an array of orders, where each order contains its `orderId` and an array of product names, each with the quantity
 // [{orderId: 1, products: [{name: "Laptop", quantity: 1}, {name: "Mouse", quantity: 2}]}, {orderId: 2, products: [{name: "Keyboard", quantity: 1}]}]
