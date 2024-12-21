@@ -99,8 +99,9 @@ const addAdj = function(init, num) {
 }
 
 const cumulativeSumsOf = function (arrays) { 
-  arrays.reduce(addAdj, [0]);
-  return arrays;
+  const accumulate = arrays.reduce(addAdj, [0]);
+  accumulate.shift();
+  return accumulate;
 };
 
 [[1, 2, 3], [4, 5, 6]].map(cumulativeSumsOf);
@@ -214,29 +215,73 @@ completeName.map(fullNames);
 
 // calculate total prices from [{ price: 10, quantity: 2 }, { price: 5, quantity: 4 }] => [20, 20]
 // (price * quantity)
-const totalPrices = function (objects) { };
+const totalPrices = function (objects) { 
+  return objects.price * objects.quantity;
+};
+[{ price: 10, quantity: 2 }, { price: 5, quantity: 4 }].map(totalPrices);
 
 // determine if a person is an adult from [{ name: "Alice", age: 17 }, { name: "Bob", age: 22 }] => [false, true]
 // (age >= 18)
-const isAdult = function (objects) { };
+const isAdult = function (objects) { 
+  return objects.age >= 18;
+};
+[{ name: "Alice", age: 17 }, { name: "Bob", age: 22 }].map(isAdult);
 
 // create abbreviations from [{ city: "New York", country: "USA" }, { city: "Los Angeles", country: "USA" }] => ["NY, USA", "LA, USA"]
-const abbreviations = function (objects) { };
+
+const abbrev =[{ city: "New York", country: "USA" }, 
+  { city: "Los Angeles", country: "USA" } ];
+
+const cityabb = function(city) {
+  return city.split(" ").map((ele) => { return ele[0] }).join("");
+}
+
+const abbreviations = function (objects) {  
+  return cityabb(objects.city) + " " + objects.country;
+};
+abbrev.map(abbreviations);
 
 // extract scores for math tests from [{ name: "Alice", scores: { math: 90, english: 85 } }, { name: "Bob", scores: { math: 80, english: 75 } }] => [90, 80]
-const mathScores = function (objects) { };
+
+const allScores = [{ name: "Alice", scores: { math: 90, english: 85 } }, { name: "Bob", scores: { math: 80, english: 75 } }];
+
+const mathScores = function (objects) { 
+  console.log("objects", objects);
+  return objects.scores.math;
+};
+
+allScores.map(mathScores);
 
 // extract coordinates from [{ x: 1, y: 2 }, { x: 3, y: 4 }] => [[1, 2], [3, 4]]
-const extractCoordinates = function (objects) { };
+const extractCoordinates = function (objects) { 
+  return [objects.x, objects.y] 
+};
+
+[{ x: 1, y: 2 }, { x: 3, y: 4 }].map(extractCoordinates);
 
 // extract full name and age from [{ firstName: "Alice", lastName: "Smith", age: 25 }, { firstName: "Bob", lastName: "Brown", age: 30 }] => [["Alice Smith", 25], ["Bob Brown", 30]]
-const fullNameAndAge = function (objects) { };
+
+const seperateNameAge = [{ firstName: "Alice", lastName: "Smith", age: 25 }, { firstName: "Bob", lastName: "Brown", age: 30 }];
+
+const fullNameAndAge = function (objects) {
+  return [[objects.firstName, objects.lastName].join(" ") , objects.age];
+};
+
+seperateNameAge.map(fullNameAndAge);
 
 // extract scores from [{ name: "Alice", scores: { math: 90, english: 85 } }, { name: "Bob", scores: { math: 80, english: 75 } }] => [[90, 85], [80, 75]]
-const extractScores = function (objects) { };
+
+const subjectScores = [{ name: "Alice", scores: { math: 90, english: 85 } }, { name: "Bob", scores: { math: 80, english: 75 } }];
+
+const extractScores = function (objects) { 
+  return [objects.scores.math, objects.scores.english];
+};
+
+subjectScores.map(extractScores);
 
 // extract key-value pairs from [{ key: "a", value: 1 }, { key: "b", value: 2 }] => [["a", 1], ["b", 2]]
 const keyValuePairs = function (objects) { };
+[{ key: "a", value: 1 }, { key: "b", value: 2 }]
 
 // split full names into first and last names from [{ name: "Alice Smith" }, { name: "Bob Brown" }] => [["Alice", "Smith"], ["Bob", "Brown"]]
 const splitFullNames = function (objects) { };
@@ -464,7 +509,16 @@ const getUserPostTitles = function (users) { };
 // given an array of products, where each product contains a `name`, `price`, and `tags` array, return a new array of products where each product contains its name and an array of uppercased tags
 // [{name: "Shirt", price: 20, tags: ["cotton", "summer"]}, {name: "Shoes", price: 50, tags: ["leather", "winter"]}] 
 // => [{name: "Shirt", tags: ["COTTON", "SUMMER"]}, {name: "Shoes", tags: ["LEATHER", "WINTER"]}]
-const formatProductTags = function (products) { };
+const clothCataloge = [{name: "Shirt", price: 20, tags: ["cotton", "summer"]}, {name: "Shoes", price: 50, tags: ["leather", "winter"]}];
+
+const formatProductTags = function (products) {
+  const object = {};
+  object["name"] = products.name;
+  object["tags"] = products.tags.map(uppercaseOf);
+  return object;
+};
+
+clothCataloge.map(formatProductTags);
 
 // given an array of categories where each category has a `categoryName` and `items` array, return a new array where each item is an object with the category name and an array of item names
 // [{categoryName: "Fruits", items: [{name: "Apple"}, {name: "Banana"}]}, {categoryName: "Vegetables", items: [{name: "Carrot"}]}] 
