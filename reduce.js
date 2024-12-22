@@ -28,8 +28,8 @@ const averageOf = function (numbers) {
 
 console.log(averageOf([1, 2, 3, 4, 5]));
 
-const findMin = function (refvalue, comaparator) {
-  return Math.min(refvalue, comaparator);
+const findMin = function (refvalue, comparator) {
+  return Math.min(refvalue, comparator);
 }
 
 // minOf([3, 1, 4, 1, 5, 9, 2]) => 1
@@ -39,19 +39,53 @@ const minOf = function (numbers) {
 console.log(minOf([3, 1, 4, 1, 5, 9, 2]));
 
 // maxOf([3, 1, 4, 1, 5, 9, 2]) => 9
-const maxOf = function (numbers) { }
+const findMaximum = function(refValue, comparator) {
+  return Math.max(refValue, comparator);
+}
+
+const maxOf = function (numbers) { 
+  return numbers.reduce(findMaximum, -Infinity);
+}
+console.log(maxOf([3, 1, 4, 1, 5, 9, 2]));
 
 // sumPositiveNumbers([1, -2, 3, -4]) => 4
-const sumPositiveNumbers = function (numbers) { }
+
+const addIfPositive = function (ref, value) {
+  return value > 0 ? ref + value : ref;
+}
+
+const sumPositiveNumbers = function (numbers) {
+  return numbers.reduce(addIfPositive, 0);
+}
+
+console.log(sumPositiveNumbers([1, -2, 3, -4]));
+
+const addSquares = function(currentSum, currentNum) {
+  return currentSum + (currentNum * currentNum);
+}
 
 // sumOfSquares([1, 2, 3, 4]) => 30
-const sumOfSquares = function (numbers) { }
+const sumOfSquares = function (numbers) { 
+  return numbers.reduce(addSquares, 0);
+}
+
+console.log(sumOfSquares([1, 2, 3, 4]));
 
 // sumOfOddNumbers([1, 2, 3, 4, 5]) => 9
-const sumOfOddNumbers = function (numbers) { }
+const addSquaresOfOdd = function(currentSum, currentNum) {
+  return currentNum & 1 ? currentNum + currentSum : currentNum;
+}
+
+const sumOfOddNumbers = function (numbers) { 
+  return numbers.reduce(addSquaresOfOdd, 0);
+}
+
+console.log(sumOfOddNumbers([1, 2, 3, 4, 5]));
 
 // countNegativeNumbers([1, -2, 3, -4]) => 2
-const countNegativeNumbers = function (numbers) { }
+const countNegativeNumbers = function (numbers) { 
+  
+}
 
 // findSumOfEvenSquares([1, 2, 3, 4]) => 20
 const findSumOfEvenSquares = function (numbers) { }
@@ -176,8 +210,26 @@ const mergeConsecutiveDuplicates = function (array) { }
 // longestConsecutiveSubsequence([1, 2, 0, 1, 3, 4, 5]) => [0, 1, 2, 3, 4, 5]
 const longestConsecutiveSubsequence = function (numbers) { }
 
+const topK = function (k) {
+  const count = {};
+  return function(existingCount, value) {
+    console.log("existingCount", existingCount);
+    console.log("value", value);
+    if (!existingCount.includes(value)) {
+      existingCount.push(value);
+    }
+    
+    return existingCount;
+  }
+}
+
 // topKFrequent([1,1,1,2,2,3], 2) => [1, 2]
-const topKFrequent = function (numbers, k) { }
+const topKFrequent = function (numbers, k) { 
+  const uniqueNumbers = numbers.reduce(topK(k), []);
+  console.log("uniqueNumbers", uniqueNumbers);
+  return uniqueNumbers;
+}
+console.log(topKFrequent([1,1,1,2,2,3], 2));
 
 // nestedAverage([[[1, 2]], [3, 4], [5, [6, 7]]]) => 4
 const nestedAverage = function (nestedNumbers) { }
