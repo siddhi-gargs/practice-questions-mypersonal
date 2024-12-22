@@ -1,14 +1,42 @@
 // sumOf([1, 2, 3, 4]) => 10
-const sumOf = function (numbers) { }
+
+const sum = function (sum, currentNum) {
+  return currentNum + sum; 
+}
+
+const sumOf = function (numbers) { 
+  return numbers.reduce(sum, 0);
+}
+
+console.log(sumOf([1, 2, 3, 4]));
 
 // productOf([1, 2, 3, 4]) => 24
-const productOf = function (numbers) { }
+
+const product = function (product, currentNum) { 
+  return product * currentNum;
+}
+
+const productOf = function (numbers) { 
+  return numbers.reduce(product, 1)
+}
+console.log(productOf([1, 2, 3, 4]));
 
 // averageOf([1, 2, 3, 4, 5]) => 3
-const averageOf = function (numbers) { }
+const averageOf = function (numbers) { 
+  return sumOf(numbers) / numbers.length;
+}
+
+console.log(averageOf([1, 2, 3, 4, 5]));
+
+const findMin = function (refvalue, comaparator) {
+  return Math.min(refvalue, comaparator);
+}
 
 // minOf([3, 1, 4, 1, 5, 9, 2]) => 1
-const minOf = function (numbers) { }
+const minOf = function (numbers) { 
+  return numbers.reduce(findMin, Infinity);
+}
+console.log(minOf([3, 1, 4, 1, 5, 9, 2]));
 
 // maxOf([3, 1, 4, 1, 5, 9, 2]) => 9
 const maxOf = function (numbers) { }
@@ -155,15 +183,42 @@ const topKFrequent = function (numbers, k) { }
 const nestedAverage = function (nestedNumbers) { }
 
 // cartesianProduct([1, 2], ['a', 'b']) => [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
-const cartesianProduct = function (arr1, arr2) { }
+
+const possibility = function(arr2) {
+  return function(initArr, value) { 
+    return initArr.concat(arr2.map(y => [value, y]));
+  }
+}
+
+const cartesianProduct = function (arr1, arr2) { 
+  return arr1.reduce(possibility(arr2), []);
+}
+
+console.log(cartesianProduct([1, 2], ['a', 'b', "c"]));
 
 // groupByDate([{ date: '2024-01-01', value: 10 }, { date: '2024-01-01', value: 20 }, { date: '2024-01-02', value: 30 }]) => { '2024-01-01': [10, 20], '2024-01-02': [30] }
-const groupByDate = function (records) { }
 
+const distributedDate = [{ date: '2024-01-01', value: 10 }, { date: '2024-01-01', value: 20 }, { date: '2024-01-02', value: 30 }, {date: "2024-01-02", value: 67} ];
+
+const dateWithAssociativeValue = function(dateAndValue, currentDateAndValue) {  
+  if (dateAndValue[currentDateAndValue.date]) {
+    dateAndValue[currentDateAndValue.date] = [dateAndValue[currentDateAndValue.date], currentDateAndValue.value].flat();
+  } else {
+    dateAndValue[currentDateAndValue.date] = currentDateAndValue.value;
+  }
+
+  return dateAndValue;
+}
+
+const groupByDate = function (records) { 
+  return records.reduce(dateWithAssociativeValue, {});
+}
+
+console.log(groupByDate(distributedDate));
+
+console.log = function () { };
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
 const findMinMax = function (initObj, currentNumber) {
-  console.log("initObj", initObj); 
-  console.log(currentNumber); 
   initObj.min = Math.min(initObj.min, currentNumber); 
   initObj.max = Math.max(initObj.max, currentNumber); 
   return initObj; 
