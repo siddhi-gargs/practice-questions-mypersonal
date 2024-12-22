@@ -1,3 +1,14 @@
-// given two arrays, one of people’s names and one of ages, create closures to generate a message indicating whether each person is an adult (18 or older), then use flatMap to apply the closure to each person
-// ["Alice", "Bob"], [20, 17] => ["Alice is an adult", "Bob is not an adult"]
-const checkAdultStatus = function (names, ages) { };
+const citiesAndPopulation = { "London": { population: 9000000 }, "Paris": { population: 2200000 }, "Tokyo": { population: 14000000 } };
+
+const minPopulation = function (lookup) {
+  return  function (lastCaluPopulation, currentPopulation) {
+    return Math.min(lastCaluPopulation, lookup[currentPopulation].population);
+  }
+}
+
+const findLargeCities = function (cities, lookup) { 
+  const thresholdPopulation = cities.reduce(minPopulation(lookup), Infinity);
+  return cities.filter(city => lookup[city].population !== thresholdPopulation);
+}
+
+console.log(findLargeCities(["London", "Paris", "Tokyo"], citiesAndPopulation));
