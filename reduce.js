@@ -82,19 +82,49 @@ const sumOfOddNumbers = function (numbers) {
 
 console.log(sumOfOddNumbers([1, 2, 3, 4, 5]));
 
-// countNegativeNumbers([1, -2, 3, -4]) => 2
-const countNegativeNumbers = function (numbers) { 
-  
+const increIfNegative = function(count, currentNumber) {
+  return currentNumber < 0 ? count + 1 : count;
 }
 
-// findSumOfEvenSquares([1, 2, 3, 4]) => 20
-const findSumOfEvenSquares = function (numbers) { }
+// countNegativeNumbers([1, -2, 3, -4]) => 2
+const countNegativeNumbers = function (numbers) { 
+  return numbers.reduce(increIfNegative, 0);
+}
+console.log(countNegativeNumbers([1, -2, 3, -4]));
 
-// concatenateWords(["hello", "world"]) => "helloworld"
-const concatenateWords = function (words) { }
+// findSumOfEvenSquares([1, 2, 3, 4]) => 20
+
+const squaresOfEven = function(currentSum, currentValue) {
+  return currentValue & 1 ? currentSum :  addSquares(currentSum, currentValue);
+}
+
+const findSumOfEvenSquares = function (numbers) { 
+  return numbers.reduce(squaresOfEven, 0);
+}
+
+console.log(findSumOfEvenSquares([1, 2, 3, 4]));
+
+const concatnation = function(concatedString, string) {
+  return concatedString + string;
+}
+
+// concatenateWords(["hello", "world"]) => "helloworld" 
+const concatenateWords = function (words) { 
+  return words.reduce(concatnation, "");
+}
+
+console.log(concatenateWords(["hello", "world"]));
 
 // longestWord(["apple", "banana", "cherry", "kiwi"]) => "banana"
-const longestWord = function (words) { }
+const replaceLongestString = function(previousString, string) {
+  return previousString.length > string.length ? previousString : string; 
+}
+
+const longestWord = function (words) { 
+  return words.reduce(replaceLongestString, "");
+}
+
+console.log(longestWord(["apple", "banana", "cherry", "kiwi"]))
 
 // shortestWord(["apple", "banana", "cherry", "kiwi"]) => "kiwi"
 const shortestWord = function (words) { }
@@ -204,8 +234,16 @@ const findFirstNonRepeated = function (numbers) { }
 // countVowels(["apple", "banana", "grape"]) => { a: 6, e: 3, i: 0, o: 0, u: 0 }
 const countVowels = function (words) { }
 
+const mergeDuplicate = function(existingArray, value) {
+
+}
+
 // mergeConsecutiveDuplicates([1,1,1,2,3,3,4]) => [1,2,3,4]
-const mergeConsecutiveDuplicates = function (array) { }
+const mergeConsecutiveDuplicates = function (array) { 
+  return array.reduce()
+}
+
+console.log(mergeConsecutiveDuplicates([1,1,1,2,3,3,4]))
 
 // longestConsecutiveSubsequence([1, 2, 0, 1, 3, 4, 5]) => [0, 1, 2, 3, 4, 5]
 const longestConsecutiveSubsequence = function (numbers) { }

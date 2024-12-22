@@ -26,7 +26,7 @@ const rever = function (string, init) {
 }
 
 const reversedStringsOf = function (strings) { 
-  return strings.split("").reduce(rever, "");
+  return [...strings].reduce(rever, "");
 };
 
 ["hello", "world"].map(reversedStringsOf);
