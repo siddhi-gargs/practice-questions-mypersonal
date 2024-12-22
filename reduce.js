@@ -161,7 +161,32 @@ const cartesianProduct = function (arr1, arr2) { }
 const groupByDate = function (records) { }
 
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
-const findMinMax = function (numbers) { }
+const findMinMax = function (initObj, currentNumber) {
+  console.log("initObj", initObj); 
+  console.log(currentNumber); 
+  initObj.min = Math.min(initObj.min, currentNumber); 
+  initObj.max = Math.max(initObj.max, currentNumber); 
+  return initObj; 
+};
+
+const result = [1, 2, 3, 4, 5].reduce(findMinMax, { min : Infinity, max : -Infinity }); 
+console.log(result);
 
 // sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
-const sumByCategory = function (items) { }
+
+const list = [{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }];
+
+const sumOfValue = function(accumulate, option) {
+  if(accumulate[option.category]) {
+    accumulate[option.category] += option.value;
+  } else {
+    accumulate[option.category] = option.value;
+  }
+  return accumulate;
+}
+
+const sumByCategory = function (items) { 
+  return items.reduce(sumOfValue, {});
+}
+
+console.log(sumByCategory(list));

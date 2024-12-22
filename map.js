@@ -280,34 +280,92 @@ const extractScores = function (objects) {
 subjectScores.map(extractScores);
 
 // extract key-value pairs from [{ key: "a", value: 1 }, { key: "b", value: 2 }] => [["a", 1], ["b", 2]]
-const keyValuePairs = function (objects) { };
-[{ key: "a", value: 1 }, { key: "b", value: 2 }]
+const keyValuePairs = function (objects) { 
+  return [objects.key, objects.value];
+};
+
+[{ key: "a", value: 1 }, { key: "b", value: 2 }].map(keyValuePairs);
 
 // split full names into first and last names from [{ name: "Alice Smith" }, { name: "Bob Brown" }] => [["Alice", "Smith"], ["Bob", "Brown"]]
-const splitFullNames = function (objects) { };
+const splitFullNames = function (objects) {
+  return objects.name.split(" ").flat();
+};
+
+[{ name: "Alice Smith" }, { name: "Bob Brown" }].map(splitFullNames)
 
 // normalize scores so they fall between 0 and 1 based on the max score from [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }] => [0.8, 1]
-const normalizeScores = function (objects) { };
+const normalizeScores = function (objects) { 
+  return objects.score/100;
+};
+
+[{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }].map(normalizeScores)
 
 // calculate percentage contribution of each number in [10, 20, 30] (relative to the total sum) => [16.67, 33.33, 50]
-const percentageContributions = function (numbers) { };
+const percentageContributions = function (numbers) {
+  return +(numbers * (10 / 6)).toFixed(2);
+};
+
+[10, 20, 30].map(percentageContributions);
+
+const manupulateBySub = function(minimum) {
+  return function (element) {
+    return element - minimum;
+  }
+}
 
 // subtract the smallest number from each number in [3, 8, 1] => [2, 7, 0]
-const subtractMin = function (numbers) { };
+const subtractMin = function (numbers) { 
+  const minimum = Math.min(...numbers);
+  return numbers.map(manupulateBySub(minimum));
+};
+
+console.log(subtractMin([3, 8, 1]));
 
 // calculate ranks (1-based, descending) for scores in [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }, { name: "Charlie", score: 90 }] => [2, 1, 3]
 const calculateRanks = function (objects) { };
 
 // normalize strings by the longest string length in ["cat", "elephant", "dog"] => ["cat    ", "elephant", "dog    "]
 // (pad with spaces to match the longest length)
-const normalizeStringLengths = function (strings) { };
+
+const addPadInLast = function(maximum) {
+  return function (string) {
+    return string.padEnd(maximum, " ");
+  }
+}
+
+const normalizeStringLengths = function (strings) { 
+  const len = strings.map(lengthsOf);
+  const maximum = Math.max(...len);
+  return strings.map(addPadInLast(maximum));
+};
+
+console.log(normalizeStringLengths(["cat", "elephant", "dog"]));
 
 // normalize strings by centering them based on the longest string length in ["cat", "elephant", "dog"] => ["  cat   ", "elephant", "  dog   "]
-// (pad with spaces to justify to the center)
-const centerJustifyStrings = function (strings) { };
 
-// scale all numbers proportionally so the largest number becomes 100 in [20, 50, 80] => [25, 62.5, 100]
-const scaleToMax100 = function (numbers) { };
+const addPadforBringCenter = function(maximum) {
+  return function (char) {
+    const space = maximum - char.length;
+    const endSpace = Math.ceil(space / 2);
+    return char.padStart(space, " ") + " ".repeat(endSpace);
+  }
+}
+
+// (pad with spaces to justify to the center)
+const centerJustifyStrings = function (strings) { 
+  const len = strings.map(lengthsOf);
+  const maximum = Math.max(...len);
+  return strings.map(addPadforBringCenter(maximum));
+};
+
+console.log(centerJustifyStrings(["cat", "elephant", "dog"]));
+
+// scale all numbers proportionally so the largest number becomes 100 in [20, 50, 80] => [25, 62.5, 100]    
+const scaleToMax100 = function (numbers) { 
+  const maximum = Math.max(...numbers);
+};
+
+console.log(scaleToMax100([20, 50, 80]));
 
 // map each number to the difference between it and the average of the array in [10, 20, 30] => [-10, 0, 10]
 const differencesFromMean = function (numbers) { };
@@ -499,12 +557,34 @@ const checkAdultStatus = function (names, ages) { };
 
 // given an array of product objects, each containing `name` and `price`, create closures to apply a sales tax (e.g., 10%) to the price, then use flatMap to calculate the price with tax for each product
 // [{name: "Shirt", price: 20}, {name: "Shoes", price: 50}] => [22, 55]
-const applySalesTax = function (products) { };
+const calculatePriceWithTax = function(price) {
+  return price * 0.1;
+}
+
+const applySalesTax = function (products) { 
+  return calculatePriceWithTax(products.price) + products.price;
+};
+
+[{name: "Shirt", price: 20}, {name: "Shoes", price: 50}].map(applySalesTax);
 
 // given an array of user objects with `name` and `posts`, return an array of objects where each object contains the user's name and an array of post titles
 // [{name: "Alice", posts: [{title: "Post 1"}, {title: "Post 2"}]}, {name: "Bob", posts: [{title: "Post 3"}]}] 
 // => [{name: "Alice", posts: ["Post 1", "Post 2"]}, {name: "Bob", posts: ["Post 3"]}]
-const getUserPostTitles = function (users) { };
+
+const nameAndPost = [{name: "Alice", posts: [{title: "Post 1"}, {title: "Post 2"}]}, {name: "Bob", posts: [{title: "Post 3"}]}];
+
+const allTitles = function(post) {
+  return post.title;
+}
+
+const getUserPostTitles = function (users) { 
+  const object = {};
+  object["name"] = users.name;
+  object["posts"] = users.posts.map(allTitles);
+  return object;
+};
+
+nameAndPost.map(getUserPostTitles);
 
 // given an array of products, where each product contains a `name`, `price`, and `tags` array, return a new array of products where each product contains its name and an array of uppercased tags
 // [{name: "Shirt", price: 20, tags: ["cotton", "summer"]}, {name: "Shoes", price: 50, tags: ["leather", "winter"]}] 
