@@ -64,10 +64,23 @@ const filterHighGrades = function (students) {
 console.log(filterHighGrades(nameAndGrade));
 
 // products that are in stock [{product: "apple", inStock: true}, {product: "banana", inStock: false}] => [{product: "apple", inStock: true}]
-const filterInStockProducts = function (products) { };
+
+const stock = [{product: "apple", inStock: true}, {product: "banana", inStock: false}];
+
+const filterInStockProducts = function (products) { 
+  return products.filter(product => product.inStock);
+};
+
+console.log(filterInStockProducts(stock));
 
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
-const filterRecentOrders = function (orders) { };
+
+const orderPlaced = [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}];
+const filterRecentOrders = function (orders) { 
+  return orders.filter(order => order.orderDate[6] === "2");
+};
+
+console.log(filterRecentOrders(orderPlaced));
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
 const averagePrice = [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}];
@@ -89,16 +102,51 @@ const filterBelowAveragePrice = function (products) {
 console.log(filterBelowAveragePrice(averagePrice));
 
 // active users who posted in the last 7 days [{username: "alice", lastPostDate: "2024-12-01", active: true}, {username: "bob", lastPostDate: "2024-11-20", active: true}] => [{username: "alice", lastPostDate: "2024-12-01", active: true}]
-const filterRecentActiveUsers = function (users) { };
+
+const posted = [{username: "alice", lastPostDate: "2024-12-01", active: true}, {username: "bob", lastPostDate: "2024-11-20", active: true}];
+
+const filterRecentActiveUsers = function (users) { 
+
+};
+console.log(filterRecentActiveUsers(posted));
 
 // students who passed all subjects [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}, {name: "Jane", subjects: [{name: "Math", passed: false}, {name: "Science", passed: true}]}] => [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}]
-const filterStudentsWithAllSubjectsPassed = function (students) { };
+const subjects = [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}, {name: "Jane", subjects: [{name: "Math", passed: false}, {name: "Science", passed: true}]}];
+
+const isAllPassed = function(pass) {
+  return pass.passed;
+}
+
+const filterStudentsWithAllSubjectsPassed = function (students) { 
+  return students.filter((student) => {
+    return student.subjects.every(isAllPassed);
+  });
+};
+
+console.log(filterStudentsWithAllSubjectsPassed(subjects));
 
 // people whose birthday is this month [{name: "Alice", birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] => [{name: "Alice", birthDate: "2024-12-01"}]
-const filterBirthdaysThisMonth = function (people) { };
+
+const birthdays = [{name: "Alice", birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}];
+
+const filterBirthdaysThisMonth = function (people) { 
+  return people.filter((person => person.birthDate[6] === "2"));
+};
+console.log(filterBirthdaysThisMonth(birthdays));
 
 // orders that exceed the average order value [{orderId: 1, amount: 20}, {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => [{orderId: 2, amount: 50}]
-const filterHighValueOrders = function (orders) { };
+
+const orderValue = [{orderId: 1, amount: 20}, {orderId: 2, amount: 50}, {orderId: 3, amount: 10}];
+
+const maxAmount = function(previousValue, currentValue) {
+  return Math.max(previousValue, currentValue.amount);
+}
+
+const filterHighValueOrders = function (orders) { 
+  const maximumAmount = orders.reduce(maxAmount, -Infinity)
+  return orders.filter(order => order.amount === maximumAmount);
+};
+console.log(filterHighValueOrders(orderValue));
 
 // books with reviews higher than the average rating [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
 const filterTopRatedBooks = function (books) { };
