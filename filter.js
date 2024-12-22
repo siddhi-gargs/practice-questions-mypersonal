@@ -1,26 +1,67 @@
 // even numbers [1, 2, 3, 4, 5] => [2, 4]
-const filterEvenNumbers = function (numbers) { };
+const filterEvenNumbers = function (numbers) { 
+  return numbers.filter(number => !(number & 1));
+};
+
+console.log(filterEvenNumbers([1, 2, 3, 4, 5]));
 
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
-const filterLongWords = function (words) { };
+const filterLongWords = function (words) {
+  return words.filter(word => word.length > 5);
+};
+
+console.log(filterLongWords(["apple", "banana", "kiwi", "grape"]));
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
-const filterAdults = function (people) { };
+const filterAdults = function (people) { 
+  return people.filter(people => people.age > 30);
+};
+console.log(filterAdults([{name: "Alice", age: 25}, {name: "Bob", age: 35}]));
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
-const filterActiveUser = function (users) { };
+const users = [{username: "alice", active: true}, {username: "bob", active: false}];
+
+const filterActiveUser = function (users) { 
+  return users.filter(user => user.active);
+};
+
+console.log(filterActiveUser(users));
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
-const filterNumbersGreaterThanTen = function (numbers) { };
+const filterNumbersGreaterThanTen = function (numbers) { 
+  return numbers.filter(number => number > 10);
+};
+
+console.log(filterNumbersGreaterThanTen([5, 12, 7, 18, 3]));
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
-const filterLongBooks = function (books) { };
+
+const bookDetails = [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}];
+
+const filterLongBooks = function (books) { 
+  return books.filter(book => book.pages > 200);
+};
+
+console.log(filterLongBooks(bookDetails));
 
 // users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
-const filterIncompleteProfiles = function (users) { };
+
+const profile = [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}];
+
+const filterIncompleteProfiles = function (users) { 
+  return users.filter((user) => {return !user.profileComplete; })
+};
+
+console.log(filterIncompleteProfiles(profile));
 
 // students with grades above 80 [{name: "John", grade: 75}, {name: "Jane", grade: 85}] => [{name: "Jane", grade: 85}]
-const filterHighGrades = function (students) { };
+const nameAndGrade = [{name: "John", grade: 75}, {name: "Jane", grade: 85}];
+
+const filterHighGrades = function (students) {
+  return students.filter((student) => { return student.grade > 80;} );
+};
+
+console.log(filterHighGrades(nameAndGrade));
 
 // products that are in stock [{product: "apple", inStock: true}, {product: "banana", inStock: false}] => [{product: "apple", inStock: true}]
 const filterInStockProducts = function (products) { };
@@ -204,7 +245,7 @@ const filterStudentsByGrade = function (students, minGrade) { };
 const filterBooksByAward = function (books, award) { };
 
 // Filter users where at least one post has more than a specific number of likes [{user: {name: "John", posts: [{title: "Post 1", likes: 150}, {title: "Post 2", likes: 20}]}}] => [{user: {name: "John", posts: [{title: "Post 1", likes: 150}, {title: "Post 2", likes: 20}]}}]
-const filterUsersByPostLikes = function (users, minLikes) { };
+const filterUsersByPostLike = function (users, minLikes) { };
 
 // Filter cities where at least one attraction is in a specific category [{city: {name: "Paris", attractions: [{name: "Eiffel Tower", category: "landmark"}, {name: "Louvre", category: "museum"}]}}] => [{city: {name: "Paris", attractions: [{name: "Eiffel Tower", category: "landmark"}, {name: "Louvre", category: "museum"}]}}]
 const filterCitiesByAttractionCategory = function (cities, category) { };
@@ -342,12 +383,26 @@ const findLongTermEmployees = function (employees, lookup) { };
 // Find cities with a population greater than a threshold provided in the lookup object.
 // Input: ["London", "Paris", "Tokyo"], { "London": { population: 9000000 }, "Paris": { population: 2200000 }, "Tokyo": { population: 14000000 } }
 // Output: ["London", "Tokyo"]
-const findLargeCities = function (cities, lookup) { };
+
+const citiesAndPopulation = { "London": { population: 9000000 }, "Paris": { population: 2200000 }, "Tokyo": { population: 14000000 } };
+
+const findLargeCities = function (cities, lookup) { 
+
+};
+
+console.log(findLargeCities(["London", "Paris", "Tokyo"], citiesAndPopulation));
 
 // Find items in an inventory whose quantity is greater than 10 based on the lookup object.
 // Input: ["item1", "item2", "item3"], { "item1": { quantity: 15 }, "item2": { quantity: 5 }, "item3": { quantity: 20 } }
 // Output: ["item1", "item3"]
-const findInStockItems = function (items, lookup) { };
+
+const itemsAndQuantity = { "item1": { quantity: 15 }, "item2": { quantity: 5 }, "item3": { quantity: 20 } };
+
+const findInStockItems = function (items, lookup) { 
+  return items.filter(item => lookup[item].quantity > 10);
+};
+
+console.log(findInStockItems(["item1", "item2", "item3"], itemsAndQuantity));
 
 // Find animals whose habitat matches the required type from the lookup object.
 // Input: ["Lion", "Elephant", "Shark"], { "Lion": { habitat: "Jungle" }, "Elephant": { habitat: "Jungle" }, "Shark": { habitat: "Ocean" } } , "Jungle"
