@@ -294,24 +294,35 @@ const haveMoreThan2Hobbies = function (people) {
   return people.reduce(increIfMoreThan2Hobby, 0);
 };
 
-console.log("emplyed people: ", employed(people));
-console.log("people has car: ", howManyhaveCar(people));
-console.log("animals fully Vaccinated: ", howManyPetsFullyVacinated(people));
-console.log("name And type", nameAndTypeOfAnimal(people));
-console.log("individuals cites", cities(people));
-console.log("hobbies", hobbies(people));
-console.log("pets belong to unemployed", petsOfUnemployed(people));
-console.log("average age of people", averageAge(people));
-console.log("studied computer science", studiedCsciAndHavePets(people));
-console.log("how many have more than one pet", moreThan1Pet(people));
-console.log("pets with specific property", petsSpecificActivity(people));
-console.log(
-  "animal belong to chennai or bengalore",
-  petFromChennaiOrBengalore(people)
-);
-console.log(
-  "vaccinated pets from people not own Car",
-  vaccinatedPetnotOwncar(people)
-);
-console.log("have more than 2 hobbies", haveMoreThan2Hobbies(people));
-console.log("most common type animal", commonType(people));
+// Ques 19. 9. How many individuals live in cities starting with the letter "B"?
+
+const increIfStayInCityStartWithB = function (count, people) {
+  return people.city[0] === "B" ? count + 1 : count;
+};
+
+const stayInCityStartB = function (people) {
+  return people.reduce(increIfStayInCityStartWithB, 0);
+};
+
+// console.log("emplyed people: ", employed(people));
+// console.log("people has car: ", howManyhaveCar(people));
+// console.log("animals fully Vaccinated: ", howManyPetsFullyVacinated(people));
+// console.log("name And type", nameAndTypeOfAnimal(people));
+// console.log("individuals cites", cities(people));
+// console.log("hobbies", hobbies(people));
+// console.log("pets belong to unemployed", petsOfUnemployed(people));
+// console.log("average age of people", averageAge(people));
+// console.log("studied computer science", studiedCsciAndHavePets(people));
+// console.log("how many have more than one pet", moreThan1Pet(people));
+// console.log("pets with specific property", petsSpecificActivity(people));
+// console.log(
+//   "animal belong to chennai or bengalore",
+//   petFromChennaiOrBengalore(people)
+// );
+// console.log(
+//   "vaccinated pets from people not own Car",
+//   vaccinatedPetnotOwncar(people)
+// );
+// console.log("have more than 2 hobbies", haveMoreThan2Hobbies(people));
+// console.log("most common type animal", commonType(people));
+console.log("people live in city start with B", stayInCityStartB(people));

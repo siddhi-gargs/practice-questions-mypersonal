@@ -200,16 +200,83 @@ const filterHighValueOrders = function (orders) {
 console.log(filterHighValueOrders(orderValue));
 
 // books with reviews higher than the average rating [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
-const filterTopRatedBooks = function (books) {};
+
+const bookWithRating = [
+  { title: "Book 1", rating: 4 },
+  { title: "Book 2", rating: 5 },
+  { title: "Book 3", rating: 3 },
+];
+
+const filterTopRatedBooks = function (books) {
+  const highRating = books.reduce(
+    (prev, book) => Math.max(prev, book.rating),
+    0
+  );
+  return books.filter((book) => book.rating === highRating);
+};
+
+console.log(filterTopRatedBooks(bookWithRating));
 
 // employees whose salary is higher than the department average [{name: "Alice", salary: 5000, department: "HR"}, {name: "Bob", salary: 7000, department: "HR"}, {name: "Charlie", salary: 4000, department: "IT"}] => [{name: "Bob", salary: 7000, department: "HR"}]
-const filterHighSalaryEmployees = function (employees) {};
+
+const employeeSalary = [
+  { name: "Alice", salary: 5000, department: "HR" },
+  { name: "Bob", salary: 7000, department: "HR" },
+  { name: "Charlie", salary: 4000, department: "IT" },
+];
+
+const filterHighSalaryEmployees = function (employees) {
+  const maximumSalary = employees.reduce(
+    (prev, emp) => Math.max(prev, emp.salary),
+    0
+  );
+
+  return employees.filter((employ) => employ.salary === maximumSalary);
+};
+
+console.log(filterHighSalaryEmployees(employeeSalary));
 
 // cities with a population higher than the median [{name: "City A", population: 2000}, {name: "City B", population: 5000}, {name: "City C", population: 3000}] => [{name: "City B", population: 5000}]
-const filterCitiesAboveMedianPopulation = function (cities) {};
+
+const population = [
+  { name: "City A", population: 2000 },
+  { name: "City B", population: 5000 },
+  { name: "City C", population: 4000 },
+  { name: "City C", population: 3000 },
+];
+
+const findMedian = function (array) {
+  const midNumber = Math.floor(array.length / 2);
+  const numbers =
+    array.length & 1
+      ? array[midNumber]
+      : (array[midNumber] + array[midNumber - 1]) / 2;
+  return numbers;
+};
+
+const filterCitiesAboveMedianPopulation = function (cities) {
+  const numbers = cities.map((mem) => mem.population).sort((a, b) => a - b);
+  const median = findMedian(numbers);
+  return cities.filter((city) => city.population > median);
+};
+
+console.log(filterCitiesAboveMedianPopulation(population));
 
 // posts with more than the average number of likes [{postId: 1, likes: 100}, {postId: 2, likes: 200}, {postId: 3, likes: 150}] => [{postId: 2, likes: 200}]
-const filterPopularPosts = function (posts) {};
+
+const post = [
+  { postId: 1, likes: 100 },
+  { postId: 2, likes: 200 },
+  { postId: 3, likes: 150 },
+];
+
+const filterPopularPosts = function (posts) {
+  const likes = posts.map((post) => post.likes);
+  const average = likes.reduce((prev, num) => num + prev, 0);
+  return posts.filter((post) => post.likes > average / likes.length);
+};
+
+console.log(filterPopularPosts(post));
 
 // users who have posted more than the average number of posts [{username: "Alice", postCount: 5}, {username: "Bob", postCount: 8}, {username: "Charlie", postCount: 3}] => [{username: "Bob", postCount: 8}]
 const filterActiveUsersByPostCount = function (users) {};
