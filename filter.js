@@ -494,18 +494,51 @@ const filterEvenNumbersByMembership = function (numbers, criteria) {};
 // Find countries that exist based on a lookup object with country names as keys and existence status as values.
 // Input: ["India", "USA", "Iran"], { "India": "exists", "USA": "does not exist", "Iran": "exists" }
 // Output: ["India", "Iran"]
-const findCountriesThatExist = function (countries, lookup) {};
+const countriesExistence = {
+  India: "exists",
+  USA: "does not exist",
+  Iran: "exists",
+};
+
+const findCountriesThatExist = function (countries, lookup) {
+  return countries.filter((country) => lookup[country] === "exists");
+};
+
+console.log(
+  findCountriesThatExist(["India", "USA", "Iran"], countriesExistence)
+);
 
 // Find numbers that are marked as 'valid' in the lookup object.
 // Input: [10, 20, 30, 40], {10: "valid", 20: "invalid", 30: "valid", 40: "valid"}
 // Output: [10, 30, 40]
-const findValidNumbers = function (numbers, lookup) {};
+const numbersWithValidity = {
+  10: "valid",
+  20: "invalid",
+  30: "valid",
+  40: "valid",
+};
+
+const findValidNumbers = function (numbers, lookup) {
+  return numbers.filter((number) => lookup[number] === "valid");
+};
+
+console.log(findValidNumbers([10, 20, 30, 40], numbersWithValidity));
 
 // Find users whose account status is 'active' from the lookup object.
 // Input: ["Alice", "Bob", "Charlie"], { "Alice": { status: "active" }, "Bob": { status: "inactive" }, "Charlie": { status: "active" } }
 // Output: ["Alice", "Charlie"]
 
-const findActiveUsers = function (users, lookup) {};
+const peopleWithStatus = {
+  Alice: { status: "active" },
+  Bob: { status: "inactive" },
+  Charlie: { status: "active" },
+};
+
+const findActiveUsers = function (users, lookup) {
+  return users.filter((user) => lookup[user].status === "active");
+};
+
+console.log(findActiveUsers(["Alice", "Bob", "Charlie"], peopleWithStatus));
 
 // Find strings where the length of the string is greater than the corresponding numeric threshold in the lookup object.
 // Input: ["apple", "banana", "kiwi"], { "apple": 4, "banana": 5, "kiwi": 6 }
