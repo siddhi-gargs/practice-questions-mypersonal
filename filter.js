@@ -7,11 +7,11 @@ const filterEvenNumbers = function (numbers) {
 console.log(filterEvenNumbers([1, 2, 3, 4, 5]));
 
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
-const filterLongWords = function (words) {
-  return words.filter((word) => word.length > 5);
+const filterLongWords = function (words, len) {
+  return words.filter((word) => word.length > len);
 };
 
-console.log(filterLongWords(["apple", "banana", "kiwi", "grape"]));
+console.log(filterLongWords(["apple", "banana", "kiwi", "grape"], 5));
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
 const filterAdults = function (people) {
@@ -588,21 +588,49 @@ const filterGreaterThanThresholdByMembership = function (
   numbers,
   criteria,
   threshold
-) {};
+) {
+  const common = numbers.filter(membersIncludefromFirstArray(criteria));
+  return common.filter((number) => number > threshold);
+};
+console.log(
+  filterGreaterThanThresholdByMembership([1, 2, 3, 4, 5], [2, 4, 6], 3)
+);
 
 // Filter strings from the first array that have a length greater than a specified value and are present in the second array
 // Input: ["apple", "banana", "cherry"], ["banana", "date"], length: 5
 // Output: ["banana"]
+
+const membersIncludefromFirstArray = function (secondArray) {
+  return function (number) {
+    return secondArray.includes(number);
+  };
+};
+
 const filterStringsByLengthAndMembership = function (
   strings,
   criteria,
   length
-) {};
+) {
+  const commonString = strings.filter(membersIncludefromFirstArray(criteria));
+  return filterLongWords(commonString, length);
+};
+
+console.log(
+  filterStringsByLengthAndMembership(
+    ["apple", "banana", "cherry"],
+    ["banana", "date"],
+    5
+  )
+);
 
 // Filter numbers from the first array that are not present in the second array
 // Input: [1, 2, 3, 4, 5], [2, 4, 6]
 // Output: [1, 3, 5]
-const filterByExclusion = function (numbers, criteria) {};
+const filterByExclusion = function (numbers, criteria) {
+  return numbers.filter((number) => !criteria.includes(number));
+};
+
+console.log(filterByExclusion([1, 2, 3, 4, 5], [2, 4, 6]));
 
 // Filter objects from the first array that contain properties in the second array
 // Input: [{name: "apple", color: "red"}, {name: "banana", color: "yellow"}], ["color"]
@@ -614,7 +642,7 @@ const objProperties = [
 ];
 
 const filterObjectsByProperties = function (objects, properties) {
-  return;
+  return objects.filter((object) => object[properties]);
 };
 
 console.log(filterObjectsByProperties(objProperties, ["color"]));
@@ -623,7 +651,7 @@ console.log(filterObjectsByProperties(objProperties, ["color"]));
 // Input: ["hello", "world", "hell", "how"], ["hell", "hello"]
 // Output: ["hello", "hell"]
 const filterStringsBySubstringMembership = function (strings, criteria) {
-  return strings.filter((string) => criteria.includes(string));
+  return strings.filter(membersIncludefromFirstArray(criteria));
 };
 
 console.log(
@@ -648,7 +676,7 @@ const series = function ([from, to]) {
 const filterByRange = function (numbers, ranges) {
   const range = series(...ranges);
   range.push(range.at(-1) + 1);
-  return numbers.filter((number) => range.includes(number));
+  return numbers.filter(membersIncludefromFirstArray(range));
 };
 
 console.log(filterByRange([1, 2, 3, 4, 5], [[2, 4]]));
@@ -657,7 +685,7 @@ console.log(filterByRange([1, 2, 3, 4, 5], [[2, 4]]));
 // Output: [2, 4]
 const filterEvenNumbersByMembership = function (numbers, criteria) {
   const even = filterEvenNumbers(numbers);
-  return even.filter((num) => criteria.includes(num));
+  return even.filter(membersIncludefromFirstArray(criteria));
 };
 
 console.log(filterEvenNumbersByMembership([1, 2, 3, 4, 5], [2, 4, 6]));
