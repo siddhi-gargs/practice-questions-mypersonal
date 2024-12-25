@@ -1,4 +1,5 @@
 // even numbers [1, 2, 3, 4, 5] => [2, 4]
+
 const filterEvenNumbers = function (numbers) {
   return numbers.filter((number) => !(number & 1));
 };
@@ -279,25 +280,90 @@ const filterPopularPosts = function (posts) {
 console.log(filterPopularPosts(post));
 
 // users who have posted more than the average number of posts [{username: "Alice", postCount: 5}, {username: "Bob", postCount: 8}, {username: "Charlie", postCount: 3}] => [{username: "Bob", postCount: 8}]
-const filterActiveUsersByPostCount = function (users) {};
+
+const postByuser = [
+  { username: "Alice", postCount: 5 },
+  { username: "Bob", postCount: 8 },
+  { username: "Charlie", postCount: 3 },
+];
+
+const filterActiveUsersByPostCount = function (users) {
+  const averagePost =
+    users.reduce((prev, { postCount }) => prev + postCount, 0) / users.length;
+  return users.filter(({ postCount }) => postCount > averagePost);
+};
+
+console.log(filterActiveUsersByPostCount(postByuser));
 
 // filter people older than a certain age [{name: "Alice", age: 25}, {name: "Bob", age: 30}, {name: "Charlie", age: 22}] => [{name: "Bob", age: 30}]
-const filterByAge = function (people, age) {};
+
+const ages = [
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 30 },
+  { name: "Charlie", age: 22 },
+];
+
+const filterByAge = function (people, specific) {
+  return people.filter(({ age }) => age > specific);
+};
+
+console.log(filterByAge(ages, 25));
 
 // filter products that are cheaper than a given price [{name: "item1", price: 20}, {name: "item2", price: 50}, {name: "item3", price: 10}] => [{name: "item1", price: 20}, {name: "item3", price: 10}]
-const filterByPrice = function (products, price) {};
 
-// filter students who scored above a certain grade in Math [{name: "John", grades: {math: 80, science: 90}}, {name: "Jane", grades: {math: 70, science: 85}}] => [{name: "John", grades: {math: 80, science: 90}}]
-const filterByMathGrade = function (students, grade) {};
+const items = [
+  { name: "item1", price: 20 },
+  { name: "item2", price: 50 },
+  { name: "item3", price: 10 },
+];
+
+const filterByPrice = function (products, givenPrice) {
+  return products.filter(({ price }) => price < givenPrice);
+};
+
+console.log(filterByPrice(items, 30));
+
+// filter students who scored above a certain grade in Math [{name: "John", grades: {math: 80, science: 90}}, {name: "Jane", grades: {math: 70, science: 85}}] => [{name: "John", grades: {math: 80, science: 90}}
+
+const grades = [
+  { name: "John", grades: { math: 80, science: 90 } },
+  { name: "Jane", grades: { math: 70, science: 85 } },
+];
+
+const filterByMathGrade = function (students, grade) {
+  return students.filter(({ grades: { math } }) => math > grade);
+};
+
+console.log(filterByMathGrade(grades, 70));
 
 // filter events that occur before a certain date [{name: "Event1", date: "2024-12-01"}, {name: "Event2", date: "2024-11-15"}] => [{name: "Event2", date: "2024-11-15"}]
 const filterByDate = function (events, date) {};
 
 // filter employees who earn more than a certain salary [{name: "Alice", salary: 5000}, {name: "Bob", salary: 7000}] => [{name: "Bob", salary: 7000}]
-const filterBySalary = function (employees, salary) {};
+
+const salaryData = [
+  { name: "Alice", salary: 5000 },
+  { name: "Bob", salary: 7000 },
+];
+
+const filterBySalary = function (employees, givenSalary) {
+  return employees.filter(({ salary }) => salary > givenSalary);
+};
+
+console.log(filterBySalary(salaryData, 2000));
 
 // filter orders with a quantity greater than a given number [{orderId: 1, quantity: 10}, {orderId: 2, quantity: 5}] => [{orderId: 1, quantity: 10}]
-const filterByQuantity = function (orders, quantity) {};
+
+const orders = [
+  { orderId: 1, quantity: 10 },
+  { orderId: 2, quantity: 5 },
+];
+
+const filterByQuantity = function (orders, thresholdQuantity) {
+  return orders.filter(({ quantity }) => quantity > thresholdQuantity);
+};
+
+console.log(filterByQuantity(orders, 6));
 
 // filter books published after a certain year [{title: "Book1", year: 2020}, {title: "Book2", year: 2022}] => [{title: "Book2", year: 2022}]
 const filterByYear = function (books, year) {};
@@ -541,23 +607,60 @@ const filterByExclusion = function (numbers, criteria) {};
 // Filter objects from the first array that contain properties in the second array
 // Input: [{name: "apple", color: "red"}, {name: "banana", color: "yellow"}], ["color"]
 // Output: [{name: "apple", color: "red"}, {name: "banana", color: "yellow"}]
-const filterObjectsByProperties = function (objects, properties) {};
+
+const objProperties = [
+  { name: "apple", color: "red" },
+  { name: "banana", color: "yellow" },
+];
+
+const filterObjectsByProperties = function (objects, properties) {
+  return;
+};
+
+console.log(filterObjectsByProperties(objProperties, ["color"]));
 
 // Filter strings from the first array where the substring exists in the second array
 // Input: ["hello", "world", "hell", "how"], ["hell", "hello"]
 // Output: ["hello", "hell"]
-const filterStringsBySubstringMembership = function (strings, criteria) {};
+const filterStringsBySubstringMembership = function (strings, criteria) {
+  return strings.filter((string) => criteria.includes(string));
+};
+
+console.log(
+  filterStringsBySubstringMembership(
+    ["hello", "world", "hell", "how"],
+    ["hell", "hello"]
+  )
+);
 
 // Filter numbers from the first array that fall within a range specified by a pair in the second array
 // Input: [1, 2, 3, 4, 5], [[2, 4]]
 // Output: [2, 3, 4]
-const filterByRange = function (numbers, ranges) {};
 
+const series = function ([from, to]) {
+  const range = [];
+  for (let iterate = from; iterate !== to; iterate++) {
+    range.push(iterate);
+  }
+  return range;
+};
+
+const filterByRange = function (numbers, ranges) {
+  const range = series(...ranges);
+  range.push(range.at(-1) + 1);
+  return numbers.filter((number) => range.includes(number));
+};
+
+console.log(filterByRange([1, 2, 3, 4, 5], [[2, 4]]));
 // Filter numbers from the first array that are present in the second array and are even
 // Input: [1, 2, 3, 4, 5], [2, 4, 6]
 // Output: [2, 4]
-const filterEvenNumbersByMembership = function (numbers, criteria) {};
+const filterEvenNumbersByMembership = function (numbers, criteria) {
+  const even = filterEvenNumbers(numbers);
+  return even.filter((num) => criteria.includes(num));
+};
 
+console.log(filterEvenNumbersByMembership([1, 2, 3, 4, 5], [2, 4, 6]));
 // Find countries that exist based on a lookup object with country names as keys and existence status as values.
 // Input: ["India", "USA", "Iran"], { "India": "exists", "USA": "does not exist", "Iran": "exists" }
 // Output: ["India", "Iran"]
