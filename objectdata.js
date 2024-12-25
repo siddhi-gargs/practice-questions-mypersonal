@@ -7,8 +7,12 @@ const people = [
     city: "pune",
     hobbies: [
       {
-        game: "playing chess",
+        category: "playing chess",
         specifics: "gardening",
+      },
+      {
+        category: "reading",
+        specifics: "murder mystery",
       },
     ],
 
@@ -40,8 +44,8 @@ const people = [
     city: "Bangalore",
     hobbies: [
       {
-        game: "cooking",
-        specific: "try Italian recepies",
+        category: "cooking",
+        specifics: "try Italian recepies",
       },
     ],
 
@@ -66,8 +70,12 @@ const people = [
     city: "jaipur",
     hobbies: [
       {
-        games: ["gardening", "tending rose garden"],
-        specifics: "reading historical fiction",
+        category: "gardening",
+        specifics: "tending rose garden",
+      },
+      {
+        category: "reading",
+        specifics: "historical fiction",
       },
     ],
 
@@ -101,8 +109,13 @@ const people = [
     studied: "arts",
     hobbies: [
       {
-        games: "binge-watching sci-fi",
-        specifics: "reading fantasy novels",
+        category: "binge-watching",
+        specifics: "sci-fi",
+      },
+
+      {
+        category: "reading",
+        specifics: "fantasy novels",
       },
     ],
 
@@ -118,19 +131,48 @@ const people = [
   },
 ];
 
+const display = console.log;
+
+//Ques1. How many individuals are currently employed?
+
 const employed = function (people) {
-  return people.filter((person) => person["emplyoment status"] === "employed")
-    .length;
+  return people.filter(
+    ({ "emplyoment status": emplyoment }) => emplyoment === "employed"
+  ).length;
 };
 
-const howManyhaveCar = function (people) {
-  return people.filter((person) => person.hasCar).length;
+// display("Currently employed people: ", employed(people));
+
+//Ques2. How many people own a car?
+
+const howManyhasCar = function (people) {
+  return people.filter(({ hasCar }) => hasCar).length;
 };
+
+// display("How many people has car: ", howManyhasCar(people));
+
+const extractCity = function (people, specificCity) {
+  return people.filter(({ city }) => city === specificCity);
+};
+
+// display(extractCity(people, "chennai"));
 
 const noOfPetFullyVaccinated = function (accumulatedCount, person) {
+  display("accumulatedCount", accumulatedCount, "person", person.pets);
+  // const vaccinatedAnimal = person.pets.filter(({ pets }) => {
+  //   display("pets", pets);
+  //   pets.map((pet) => pet.vaccinated === "fully").length;
+  // });
+
+  console.log("pets" in person);
+  if (!"pets" in person) {
+    return accumulatedCount;
+  }
+
   const vaccinatedAnimal = person.pets.filter(
     (pet) => pet.vaccinated === "fully"
   ).length;
+  console.log(vaccinatedAnimal);
   return accumulatedCount + vaccinatedAnimal;
 };
 
@@ -138,34 +180,29 @@ const howManyPetsFullyVacinated = function (people) {
   return people.reduce(noOfPetFullyVaccinated, 0);
 };
 
-const nameAndType = function (pet) {
-  const petObj = {};
-  petObj.type = pet.type;
-  petObj.petName = pet.petName;
-  return petObj;
+// display("Animals fully Vaccinated: ", howManyPetsFullyVacinated(people));
+
+const nameAndType = function ({ type, petName }) {
+  return { type, petName };
 };
 
 const nameAndTypeOfAnimal = function (people) {
-  return people.map((person) => person.pets.map(nameAndType));
+  const { pets } = people;
+  // console.log("pets", pets);
+  return people.map(({ pets }) => {
+    // display(pets);
+    pets.map(nameAndType).flat();
+  });
 };
 
-const individualCities = function (person) {
-  const personObject = {};
-  personObject.name = person.name;
-  personObject.city = person.city;
-  return personObject;
-};
+// console.log("name And type", nameAndTypeOfAnimal(people));
 
 const cities = function (people) {
-  return people.map(individualCities);
-};
-
-const individualHobbies = function (person) {
-  return person.hobbies;
+  return people.map(({ name, city }) => ({ name, city }));
 };
 
 const hobbies = function (people) {
-  const hobby = people.map(individualHobbies).flat();
+  const hobby = people.map(({ hobbies }) => ({ hobbies })).flat();
   return [hobby.length, hobby];
 };
 
@@ -175,7 +212,7 @@ const noOfpetsEach = function (accuPets, currentPersonPet) {
 
 const petsOfUnemployed = function (people) {
   const unemployed = people.filter(
-    (person) => person["emplyoment status"] === "unemployed"
+    ({ "emplyoment status": employ }) => employ === "unemployed"
   );
   return unemployed.reduce(noOfpetsEach, 0);
 };
@@ -296,18 +333,30 @@ const haveMoreThan2Hobbies = function (people) {
 
 // Ques 19. 9. How many individuals live in cities starting with the letter "B"?
 
-const increIfStayInCityStartWithB = function (count, people) {
-  return people.city[0] === "B" ? count + 1 : count;
+const increIfStayInCityStartWithB = function (cityStartWith) {
+  return function (count, { city }) {
+    return city[0] === cityStartWith ? count + 1 : count;
+  };
 };
 
-const stayInCityStartB = function (people) {
-  return people.reduce(increIfStayInCityStartWithB, 0);
+const stayInCityStartB = function (people, cityWith) {
+  return people.reduce(increIfStayInCityStartWithB(cityWith), 0);
 };
 
-// console.log("emplyed people: ", employed(people));
-// console.log("people has car: ", howManyhaveCar(people));
-// console.log("animals fully Vaccinated: ", howManyPetsFullyVacinated(people));
-// console.log("name And type", nameAndTypeOfAnimal(people));
+display("people live in city start with B", stayInCityStartB(people, "B"));
+
+// Ques 20. Which individuals do not own any pets?
+
+const isSomeOneHasNoPet = function (people) {
+  const personWhichHasNoPet = people
+    .filter(({ pets }) => pets.length === 0)
+    .map(({ name }) => ({ name }));
+
+  return personWhichHasNoPet.length ? personWhichHasNoPet : "EveryOne has";
+};
+
+display("isSomeoneHasNoPet", isSomeOneHasNoPet(people));
+
 // console.log("individuals cites", cities(people));
 // console.log("hobbies", hobbies(people));
 // console.log("pets belong to unemployed", petsOfUnemployed(people));
@@ -325,4 +374,3 @@ const stayInCityStartB = function (people) {
 // );
 // console.log("have more than 2 hobbies", haveMoreThan2Hobbies(people));
 // console.log("most common type animal", commonType(people));
-console.log("people live in city start with B", stayInCityStartB(people));
