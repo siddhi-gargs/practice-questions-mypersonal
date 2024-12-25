@@ -366,10 +366,35 @@ const filterByQuantity = function (orders, thresholdQuantity) {
 console.log(filterByQuantity(orders, 6));
 
 // filter books published after a certain year [{title: "Book1", year: 2020}, {title: "Book2", year: 2022}] => [{title: "Book2", year: 2022}]
-const filterByYear = function (books, year) {};
+const publisedYear = [
+  { title: "Book1", year: 2020 },
+  { title: "Book2", year: 2022 },
+];
+const filterByYear = function (books, criteria) {
+  return books.filter(({ year }) => year > criteria);
+};
+console.log(filterByYear(publisedYear, 2021));
 
 // filter students with a grade higher than a given threshold in a specific subject [{name: "Alice", grades: {math: 90, science: 80}}, {name: "Bob", grades: {math: 70, science: 85}}] => [{name: "Alice", grades: {math: 90, science: 80}}]
-const filterBySubjectGrade = function (students, subject, threshold) {};
+const subDetails = [
+  { name: "Alice", grades: { math: 90, science: 80 } },
+  { name: "Bob", grades: { math: 70, science: 85 } },
+];
+
+const filterBySubjectGrade = function (students, subject, threshold) {
+  return students.filter(
+    ({
+      name: {
+        grades: {},
+      },
+    }) => {
+      console.log("grades", grades);
+      return grades[subject] > threshold;
+    }
+  );
+};
+
+console.log(filterBySubjectGrade(subDetails, "math", 78));
 
 // filter photos with a minimum number of likes [{id: 1, likes: 100}, {id: 2, likes: 50}] => [{id: 1, likes: 100}]
 const filterByLikes = function (photos, likes) {};
@@ -557,29 +582,79 @@ const filterUsersByFollowingAndRecentPosts = function (
 ) {};
 
 // Filter posts from users who have more than a certain number of followers and at least one post with over a set number of comments [{post: {user: {name: "Chris", followers: 1200}, comments: 350}}] => [{post: {user: {name: "Chris", followers: 1200}, comments: 350}}]
+
+const profiles = [
+  { post: { user: { name: "Chris", followers: 1200 }, comments: 350 } },
+];
 const filterPostsByUserFollowersAndComments = function (
   posts,
   minFollowers,
   minComments
-) {};
+) {
+  return posts.filter(
+    ({
+      post: {
+        user: { followers },
+        comments,
+      },
+    }) => followers > minFollowers && comments > minComments
+  );
+};
+
+console.log(filterPostsByUserFollowersAndComments(profiles, 800, 200));
 
 // Filter users who have shared a post that has a specific hashtag and has been liked more than a set number [{user: {name: "Mia", posts: [{title: "Post 1", hashtags: ["#beach", "#sunset"], likes: 300}]}}] => [{user: {name: "Mia", posts: [{title: "Post 1", hashtags: ["#beach", "#sunset"], likes: 300}]}}]
+
+const instaGramDetails = [
+  {
+    user: {
+      name: "Mia",
+      posts: [{ title: "Post 1", hashtags: ["#beach", "#sunset"], likes: 300 }],
+    },
+  },
+];
 const filterUsersByHashtagAndLikes = function (users, hashtag, minLikes) {};
 
 // Filter numbers from the first array that are present in the second array
 // Input: [1, 2, 3, 4, 5], [2, 4, 6]
 // Output: [2, 4]
-const filterByMembership = function (numbers, criteria) {};
+const filterByMembership = function (numbers, criteria) {
+  return numbers.filter(membersIncludefromFirstArray(criteria));
+};
+
+console.log(filterByMembership([1, 2, 3, 4, 5], [2, 4, 6]));
 
 // Filter strings from the first array that appear in the second array
 // Input: ["apple", "banana", "cherry"], ["banana", "cherry", "date"]
 // Output: ["banana", "cherry"]
-const filterStringsByMembership = function (strings, criteria) {};
+
+const filterStringsByMembership = function (strings, criteria) {
+  return strings.filter(membersIncludefromFirstArray(criteria));
+};
+console.log(
+  filterStringsByMembership(
+    ["apple", "banana", "cherry"],
+    ["banana", "cherry", "date"]
+  )
+);
 
 // Filter objects from the first array where the 'id' property is present in the second array
 // Input: [{id: 1, name: "apple"}, {id: 2, name: "banana"}], [1, 3]
 // Output: [{id: 1, name: "apple"}]
-const filterObjectsById = function (objects, ids) {};
+
+const filterObjectsById = function (objects, ids) {
+  return objects.filter(({ id }) => membersIncludefromFirstArray(ids)(id));
+};
+
+console.log(
+  filterObjectsById(
+    [
+      { id: 1, name: "apple" },
+      { id: 2, name: "banana" },
+    ],
+    [1, 3]
+  )
+);
 
 // Filter numbers from the first array that are found in the second array, and greater than a specific threshold
 // Input: [1, 2, 3, 4, 5], [2, 4, 6], threshold: 3
