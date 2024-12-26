@@ -397,7 +397,16 @@ const filterBySubjectGrade = function (students, subject, threshold) {
 console.log(filterBySubjectGrade(subDetails, "math", 78));
 
 // filter photos with a minimum number of likes [{id: 1, likes: 100}, {id: 2, likes: 50}] => [{id: 1, likes: 100}]
-const filterByLikes = function (photos, likes) {};
+
+const likes = [
+  { id: 1, likes: 100 },
+  { id: 2, likes: 50 },
+];
+const filterByLikes = function (photos, givenLikes) {
+  return photos.filter(({ likes }) => likes < givenLikes);
+};
+
+console.log(filterByLikes(likes, 90));
 
 // filter users who have made a certain number of posts [{username: "Alice", posts: 10}, {username: "Bob", posts: 5}] => [{username: "Alice", posts: 10}]
 const filterByPostCount = function (users, postCount) {};

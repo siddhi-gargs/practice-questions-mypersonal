@@ -444,6 +444,8 @@ console.log(centerJustifyStrings(["cat", "elephant", "dog"]));
 // scale all numbers proportionally so the largest number becomes 100 in [20, 50, 80] => [25, 62.5, 100]
 const scaleToMax100 = function (numbers) {
   const maximum = Math.max(...numbers);
+  const fractionToBeAdded = (100 - maximum) / maximum;
+  return numbers.map((number) => number + number * fractionToBeAdded);
 };
 
 console.log(scaleToMax100([20, 50, 80]));
@@ -452,17 +454,58 @@ console.log(scaleToMax100([20, 50, 80]));
 const differencesFromMean = function (numbers) {};
 
 // map each string to its frequency in ["apple", "banana", "apple", "apple", "banana"] => [3, 2, 3, 3, 2]
-const stringFrequencies = function (strings) {};
+
+const mapFrequency = [
+  "apple",
+  "banana",
+  "apple",
+  "apple",
+  "banana",
+  "papaya",
+  "papaya",
+];
+
+const countFreq = (init, curr) => {
+  const count = init[curr] || 0;
+  init[curr] = count + 1;
+  return init;
+};
+
+const stringFrequencies = function (strings) {
+  const initialize = strings.reduce(countFreq, {});
+  return strings.map((string) => initialize[string]);
+};
+
+console.log(stringFrequencies(mapFrequency));
 
 // mark the largest number in an array as true, others as false in [1, 3, 2] => [false, true, false]
-const markLargestNumber = function (numbers) {};
+const markLargestNumber = function (numbers) {
+  const sortedArray = [...numbers].sort((a, b) => b - a);
+  return numbers.map((number) => {
+    return number === sortedArray[0];
+  });
+};
+
+console.log(markLargestNumber([1, 3, 2]));
 
 // normalize scores based on a curve: first find the max score, then subtract the mean, and scale the results to a range of 0-100 in [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }, { name: "Charlie", score: 90 }] => [60, 100, 80]
 // Steps: Find max score, calculate mean, normalize each score.
+
+const scores = [
+  { name: "Alice", score: 80 },
+  { name: "Bob", score: 100 },
+  { name: "Charlie", score: 90 },
+];
+
 const normalizeWithCurve = function (objects) {};
 
 // group students by their grades: first categorize them into A, B, C, and so on, then map each student to their respective category in [{ name: "Alice", grade: 85 }, { name: "Bob", grade: 92 }] => [['Alice', 'B'], ['Bob', 'A']]
 // Steps: Categorize grades, then group students by category.
+
+const grades = [
+  { name: "Alice", grade: 85 },
+  { name: "Bob", grade: 92 },
+];
 const groupByGrade = function (objects) {};
 
 // sort strings by length first, and then alphabetically if lengths are equal in ["cat", "banana", "apple", "kiwi"] => ["cat", "kiwi", "apple", "banana"]
@@ -617,11 +660,31 @@ const multiplyByCorresponding = function (bases, multipliers) {};
 
 // given an array of objects, where each object contains a `name` and `age`, create a closure for each person that adds a `yearsToRetirement` property, then use flatMap to calculate the retirement year for each person assuming retirement at 65
 // [{name: "Alice", age: 30}, {name: "Bob", age: 40}] => ["Alice will retire in 35 years", "Bob will retire in 25 years"]
-const calculateRetirement = function (people) {};
+const retirementYear = [
+  { name: "Alice", age: 30 },
+  { name: "Bob", age: 40 },
+];
+
+const remainRetirementYear = function (retirementAge) {
+  return function ({ name, age }) {
+    const remainAge = retirementAge - age;
+    return `${name} will be retire in ${remainAge}`;
+  };
+};
+
+const calculateRetirement = function (people) {
+  return people.map(remainRetirementYear(65));
+};
+
+console.log(calculateRetirement(retirementYear));
 
 // given an array of numbers, create a closure that checks if a number is greater than or equal to a specified value (e.g., 10), then use flatMap to return only the numbers that meet the condition
 // [5, 10, 15], 10 => [10, 15]
-const filterGreaterThanEqual = function (numbers, threshold) {};
+const filterGreaterThanEqual = function (numbers, threshold) {
+  return numbers.filter((number) => number >= threshold);
+};
+
+console.log(filterGreaterThanEqual([5, 10, 15], 10));
 
 // given an array of strings representing messages and an array of punctuation marks, create closures that append each punctuation mark to each message, then use flatMap to create all possible combinations of messages with punctuation
 // ["Hello", "Goodbye"], ["!", "?"] => ["Hello!", "Hello?", "Goodbye!", "Goodbye?"]
@@ -666,7 +729,7 @@ const allTitles = function (post) {
 const getUserPostTitles = function (users) {
   const object = {};
   object["name"] = users.name;
-  object["posts"] = users.posts.map(allTitles);
+  object["posts"] = users.map();
   return object;
 };
 
