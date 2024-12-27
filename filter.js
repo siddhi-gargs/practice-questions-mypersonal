@@ -580,15 +580,37 @@ const filterPostsByCommentsAndLocation = function (
   location
 ) {};
 
-// Filter users who have at least one post where the caption contains a specific word [{user: {name: "Sara", posts: [{title: "Post 1", caption: "Amazing sunset!"}, {title: "Post 2", caption: "Another day, another adventure!"}]}}] => [{user: {name: "Sara", posts: [{title: "Post 1", caption: "Amazing sunset!"}, {title: "Post 2", caption: "Another day, another adventure!"}]}}]
+// Filter users who have at least one post where the caption contains a specific word [{user: {name: "Sara", posts: [{title: "Post 1", caption: "Amazing sunset!"}, {title: "Post 2", caption: "Another day, another adventure!"}]}}] => [{user: {name: "Sara", posts: [{title: "tePost 1", caption: "Amazing sunset!"}, {title: "Post 2", caption: "Another day, another adventure!"}]}}]
 const filterUsersByPostCaption = function (users, word) {};
 
+const inputDateIsInRange = function (endDate, inputDate, noOfDays) {
+  const actualEndDate = new Date(endDate);
+  const actualInput = new Date(inputDate);
+
+  const formDate = new Date(
+    actualEndDate.getTime() - noOfDays * 60 * 60 * 24 * 1000
+  );
+
+  return formDate <= actualInput && actualInput <= actualEndDate;
+};
+
 // Filter users who follow a certain number of accounts and have at least one post in the last week [{user: {name: "Jake", following: 200, lastPostDate: "2024-12-10"}}] => [{user: {name: "Jake", following: 200, lastPostDate: "2024-12-10"}}]
+const postDate = [
+  { user: { name: "Jake", following: 200, lastPostDate: "2024-12-10" } },
+];
 const filterUsersByFollowingAndRecentPosts = function (
   users,
   minFollowing,
   daysAgo
-) {};
+) {
+  return users.filter(
+    ({ user: { following, lastPostDate } }) =>
+      following > minFollowing &&
+      inputDateIsInRange(new Date(), lastPostDate, daysAgo)
+  );
+};
+
+console.log(filterUsersByFollowingAndRecentPosts(postDate, 150, 34));
 
 // Filter posts from users who have more than a certain number of followers and at least one post with over a set number of comments [{post: {user: {name: "Chris", followers: 1200}, comments: 350}}] => [{post: {user: {name: "Chris", followers: 1200}, comments: 350}}]
 

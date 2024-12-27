@@ -510,11 +510,34 @@ const groupByGrade = function (objects) {};
 
 // sort strings by length first, and then alphabetically if lengths are equal in ["cat", "banana", "apple", "kiwi"] => ["cat", "kiwi", "apple", "banana"]
 // Steps: Sort by length, then by lexicographical order.
-const sortByLengthAndAlphabet = function (strings) {};
+const sortByLengthAndAlphabet = function (strings) {
+  return strings.sort((a, b) => {
+    if (a.length === b.length) {
+      return a[0].charCodeAt() - b[0].charCodeAt();
+    }
+    return a.length - b.length;
+  });
+};
+
+console.log(sortByLengthAndAlphabet(["cat", "banana", "apple", "kiwi"]));
 
 // find the difference between the max and min values, and then normalize the array based on this range in [10, 20, 30, 5] => [0.25, 0.75, 1, 0]
 // Steps: Find min, max, calculate range, then normalize each value.
-const normalizeByRange = function (numbers) {};
+
+const normalizeInStandard = function (numbersArray) {
+  const max = Math.max(...numbersArray);
+  const min = Math.min(...numbersArray);
+
+  return function (number) {
+    return (number - min) / (max - min);
+  };
+};
+
+const normalizeByRange = function (numbers) {
+  return numbers.map(normalizeInStandard(numbers));
+};
+
+console.log(normalizeByRange([10, 20, 30, 5]));
 
 // calculate the percentage of each number relative to the total sum of the array, and then sort the percentages in descending order in [100, 200, 50, 25] => [50, 25, 12.5, 12.5]
 // Steps: Calculate sum, find percentage of each number, sort in descending order.
