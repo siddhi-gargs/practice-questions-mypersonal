@@ -21,4 +21,6 @@ const mergedObjects = function (objects) {
   return objects.reduce(mergeObj, {});
 };
 
+const allFunction = `keyValue ${keyAndValuePairs} mergeObj ${mergeObj} mergedObject $ `;
+
 console.log(mergedObjects(mergekeyValues));

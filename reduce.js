@@ -176,9 +176,8 @@ const mergekeyValues = [
   { a: 10, c: 13, d: 34 },
 ];
 
-const keyAndValuePairs = function (mergeObj, element) {
-  mergeObj[element[0]] =
-    element[0] in mergeObj ? mergeObj[element[0]] + element[1] : element[1];
+const keyAndValuePairs = function (mergeObj, [key, value]) {
+  mergeObj[key] = key in mergeObj ? mergeObj[key] + value : value;
   return mergeObj;
 };
 
@@ -193,13 +192,37 @@ const mergedObjects = function (objects) {
 console.log(mergedObjects(mergekeyValues));
 
 // zip(["a", "b", "c"], [1, 2, 3]) => { "a": 1, "b": 2, "c": 3 }
-const zip = function (keys, values) {};
+
+const associateWithValues = function (valueArray) {
+  return function (merOb, keys, index) {
+    merOb[keys] = valueArray[index];
+    return merOb;
+  };
+};
+
+const zip = function (keys, values) {
+  return keys.reduce(associateWithValues(values), {});
+};
+
+console.log(zip(["a", "b", "c"], [1, 2, 3]));
 
 // makeObject(["city", "country"], ["Paris", "France"]) => { "city": "Paris", "country": "France" }
-const makeObject = function (keys, values) {};
+const makeObject = function (keys, values) {
+  return keys.reduce(associateWithValues(values), {});
+};
+
+console.log(makeObject([ "city", "country" ], [ "Paris", "France" ]));
 
 // invertObject({ "a": 1, "b": 2, "c": 3 }) => { 1: "a", 2: "b", 3: "c" }
-const invertObject = function (obj) {};
+
+const invertObject = function (obj) {
+  return Object.entries(obj).reduce((replaced, [ key, value ]) => {
+    replaced[ value ] = key;
+    return replaced;
+  }, {});
+};
+
+console.log(invertObject({ "a": 1, "b": 2, "c": 3 }));
 
 // mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) => { "a": 1, "b": 2, "c": 3, "d": 4 }
 const mergeArrays = function (arr1, arr2) {};
@@ -258,27 +281,28 @@ const countVowels = function (words) {};
 const mergeDuplicate = function (existingArray, value) {};
 
 // mergeConsecutiveDuplicates([1,1,1,2,3,3,4]) => [1,2,3,4]
+
 const mergeConsecutiveDuplicates = function (array) {
-  return array.reduce();
+  return array.reduce((prev, ));
 };
 
 console.log(mergeConsecutiveDuplicates([1, 1, 1, 2, 3, 3, 4]));
 
 // longestConsecutiveSubsequence([1, 2, 0, 1, 3, 4, 5]) => [0, 1, 2, 3, 4, 5]
-const longestConsecutiveSubsequence = function (numbers) {};
+// const longestConsecutiveSubsequence = function (numbers) {};
 
-const topK = function (k) {
-  const count = {};
-  return function (existingCount, value) {
-    console.log("existingCount", existingCount);
-    console.log("value", value);
-    if (!existingCount.includes(value)) {
-      existingCount.push(value);
-    }
+// const topK = function (k) {
+//   const count = {};
+//   return function (existingCount, value) {
+//     console.log("existingCount", existingCount);
+//     console.log("value", value);
+//     if (!existingCount.includes(value)) {
+//       existingCount.push(value);
+//     }
 
-    return existingCount;
-  };
-};
+//     return existingCount;
+//   };
+// };
 
 // topKFrequent([1,1,1,2,2,3], 2) => [1, 2]
 const topKFrequent = function (numbers, k) {
